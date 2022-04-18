@@ -4,3 +4,4 @@
 #### Anyone is welcome to use the application as they wish
 
 This applications makes use of SQLite to save records of books/comics/other content.
+![](screenshot.png)
