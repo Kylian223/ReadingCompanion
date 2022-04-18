@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Background="{StaticResource BackdropColor}"
         WindowStyle="ToolWindow"
-        Title="Update entry" Height="300" Width="600" MinHeight="300" MinWidth="600" Topmost="True">
+        Title="Update entry" Height="360" Width="600" MinHeight="360" MinWidth="600" Topmost="True">
     <Window.Resources>
         <Style x:Key="LabelStyle" TargetType="Label">
             <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
@@ -24,27 +24,28 @@
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="15"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
         <Label Grid.Row="1" Grid.Column="1" Content="Title:  " Style="{DynamicResource LabelStyle}"></Label>
@@ -52,29 +53,28 @@
         <Label Grid.Row="3" Grid.Column="1" Content="Subgenre 1:  " Style="{DynamicResource LabelStyle}"></Label>
         <Label Grid.Row="4" Grid.Column="1" Content="Subgenre 2:  " Style="{DynamicResource LabelStyle}"></Label>
         <Label Grid.Row="5" Grid.Column="1" Content="Subgenre 3:  " Style="{DynamicResource LabelStyle}"></Label>
-
-        <Label Grid.Row="2" Grid.Column="3" Content="Progress:  " Style="{DynamicResource LabelStyle}"></Label>
-        <Label Grid.Row="2" Grid.Column="5" Content="/" Style="{DynamicResource LabelStyle}"></Label>
-        <Label Grid.Row="3" Grid.Column="3" Content="Rating:  " Style="{DynamicResource LabelStyle}"></Label>
-        <Label Grid.Row="3" Grid.Column="5" Content="/" Style="{DynamicResource LabelStyle}"></Label>
-        <Label Grid.Row="3" Grid.Column="6" Content="10" Style="{DynamicResource LabelStyle}" HorizontalAlignment="Left"></Label>
-        <Label Grid.Row="4" Grid.Column="3" Content="Status:  " Style="{DynamicResource LabelStyle}"></Label>
-        <Label Grid.Row="5" Grid.Column="3" Content="Image URL:  " Style="{DynamicResource LabelStyle}"></Label>
+        <Label Grid.Row="6" Grid.Column="1" Content="Progress:  " Style="{DynamicResource LabelStyle}"></Label>
+        <Label Grid.Row="6" Grid.Column="3" Content="/" Style="{DynamicResource LabelStyle}"></Label>
+        <Label Grid.Row="7" Grid.Column="1" Content="Rating:  " Style="{DynamicResource LabelStyle}"></Label>
+        <Label Grid.Row="7" Grid.Column="3" Content="/" Style="{DynamicResource LabelStyle}"></Label>
+        <Label Grid.Row="7" Grid.Column="4" Content="10" Style="{DynamicResource LabelStyle}" HorizontalAlignment="Left"></Label>
+        <Label Grid.Row="8" Grid.Column="1" Content="Status:  " Style="{DynamicResource LabelStyle}"></Label>
 
         <TextBox x:Name="TitleBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Style="{DynamicResource TextBoxStyle}"/>
         <TextBox x:Name="GenreBox" Grid.Row="2" Grid.Column="2" Style="{DynamicResource TextBoxStyle}"/>
         <TextBox x:Name="Subgenre1Box" Grid.Row="3" Grid.Column="2" Style="{DynamicResource TextBoxStyle}"/>
         <TextBox x:Name="Subgenre2Box" Grid.Row="4" Grid.Column="2" Style="{DynamicResource TextBoxStyle}"/>
         <TextBox x:Name="Subgenre3Box" Grid.Row="5" Grid.Column="2" Style="{DynamicResource TextBoxStyle}"/>
-        <TextBox x:Name="ImageURLBox" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="3" Style="{DynamicResource TextBoxStyle}"/>
+        <xctk:DecimalUpDown x:Name="ReadProgressBox" FormatString="N1" Increment=".1" Minimum="0.0" Maximum ="99999" Value="0" Grid.Row="6" Grid.Column="2" Margin="0 3 0 3"/>
+        <xctk:DecimalUpDown x:Name="ReadTotalBox" FormatString="N1" Increment=".1" Minimum="0.0" Maximum ="99999" Value="0" Grid.Row="6" Grid.Column="4" Margin="0 3 0 3"/>
+        <xctk:DecimalUpDown x:Name="RatingBox" FormatString="N1" Increment=".1" Minimum="0.0" Maximum="10.0" Value="0" Grid.Row="7" Grid.Column="2" Margin="0 3 0 3"/>
 
-        <xctk:DecimalUpDown x:Name="ReadProgressBox" FormatString="N1" Increment=".1" Minimum="0.0" Maximum ="99999" Value="0" Grid.Row="2" Grid.Column="4" Margin="0 3 0 3"/>
-        <xctk:DecimalUpDown x:Name="ReadTotalBox" FormatString="N1" Increment=".1" Minimum="0.0" Maximum ="99999" Value="0" Grid.Row="2" Grid.Column="6" Margin="0 3 0 3"/>
-        <xctk:DecimalUpDown x:Name="RatingBox" FormatString="N1" Increment=".1" Minimum="0.0" Maximum="10.0" Value="0" Grid.Row="3" Grid.Column="4" Margin="0 3 0 3"/>
+        <ComboBox x:Name="StatusBox" Grid.Row="8" Grid.Column="2" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:Status}}}" SelectedIndex="0" Margin="0 3 0 3"></ComboBox>
 
-        <ComboBox x:Name="StatusBox" Grid.Row="4" Grid.Column="4" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:Status}}}" Margin="0 3 0 3"></ComboBox>
+        <Image x:Name="PreviewImage" Grid.Row="3" Grid.Column="5" Grid.RowSpan="7" Grid.ColumnSpan="2" Height="200" Width="150" Margin="0 10 0 10"></Image>
 
-        <Button x:Name="UpdateButton" Grid.Row="9" Grid.Column="6" Content="Update info" Style="{DynamicResource ButtonStyle}" Click="UpdateButton_Click"></Button>
-        <Button x:Name="CancelButton" Grid.Row="9" Grid.Column="1" Content="Cancel" Style="{DynamicResource ButtonStyle}" Click="CancelButton_Click"></Button>
+        <Button x:Name="SelectImageButton" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="2" Width="120" Content="Select image" Style="{DynamicResource ButtonStyle}" Click="SelectImageButton_Click"></Button>
+        <Button x:Name="UpdateButton" Grid.Row="10" Grid.Column="6" Width="120" Content="Update info" Style="{DynamicResource ButtonStyle}" Click="UpdateButton_Click"></Button>
+        <Button x:Name="CancelButton" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" Width="120" HorizontalAlignment="Left" Content="Cancel" Style="{DynamicResource ButtonStyle}" Click="CancelButton_Click"></Button>
     </Grid>
 </Window>

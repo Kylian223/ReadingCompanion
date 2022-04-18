@@ -29,8 +29,7 @@ namespace ReadingCompanion
         public string SubGenre1 { get; set; }
         public string SubGenre2 { get; set; }
         public string SubGenre3 { get; set; }
-
         public Status Status { get; set; }
-        public string ImageURL { get; set; }
+        public byte[] ImageData { get; set; }
     }
 }
