@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Images\Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\DeleteImage.png" />
+    <None Remove="Images\EditImage.png" />
+    <None Remove="Images\Logo.png" />
+    <None Remove="Images\NoImage.png" />
+    <None Remove="ReadingCompanionDB.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Icon.ico" />
+    <Content Include="ReadingCompanionDB.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.3.0" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.115.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\DeleteImage.png" />
+    <Resource Include="Images\EditImage.png" />
+    <Resource Include="Images\NoImage.png" />
+  </ItemGroup>
+
+</Project>

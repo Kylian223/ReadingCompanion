@@ -1,0 +1,186 @@
+﻿<Window x:Class="ReadingCompanion.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReadingCompanion"
+        mc:Ignorable="d"
+        Title="Reading Companion" Height="450" Width="800" MinHeight="350" MinWidth="610"
+        Background="{DynamicResource BackdropColor}"
+        Foreground="{DynamicResource PrimaryTextColor}"
+        FontSize="20">
+    <Window.Resources>
+        <Style x:Key="SearchPanelStyle" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="0 5 5 0"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        
+        <Style x:Key="SearchLabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <Style x:Key="SearchComboStyle" TargetType="ComboBox">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+
+        <Style x:Key="SearchBarStyle" TargetType="TextBox">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        
+        <Style x:Key="TabItemStyle" TargetType="TabItem">
+            <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundColor}"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Margin" Value="0 0 3 0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="110"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Padding" Value="10 5"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border  Background="{TemplateBinding Background}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    Margin="{TemplateBinding Margin}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                SnapsToDevicePixels="True"
+                                                RecognizesAccessKey="True"
+                                                Margin="{TemplateBinding Margin}"
+                                                ContentSource="Header"
+                                                Focusable="False"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColor}"></Setter>
+                                <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColor}"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource HighlightColor}"></Setter>
+                                <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColor}"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <TabControl x:Name="StatusTabControl" Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Background="{DynamicResource PrimaryBackgroundColor}" BorderBrush="Transparent">
+            <TabItem x:Name="StatusTab_0" Header="Reading" Selector.Selected="TabItem_Selected" Style="{DynamicResource TabItemStyle}">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Style="{DynamicResource SearchPanelStyle}">
+                            <Label Style="{DynamicResource SearchLabelStyle}" Content="Sort by: "></Label>
+                            <ComboBox x:Name="SortCombo_0" Style="{DynamicResource SearchComboStyle}" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:SortBy}}}" SelectedIndex="0" SelectionChanged="SearchParameter_Changed"/>
+                            <Label Style="{DynamicResource SearchLabelStyle}" Content="Search: "></Label>
+                            <TextBox x:Name="SearchBox_0" Style="{DynamicResource SearchBarStyle}" TextChanged="SearchParameter_Changed"></TextBox>
+                        </StackPanel>
+                        <StackPanel x:Name="Reading_Panel">
+                            <!--Insert records here with code-->
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem x:Name="StatusTab_1" Header="On hold" Selector.Selected="TabItem_Selected" Style="{DynamicResource TabItemStyle}">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Style="{DynamicResource SearchPanelStyle}">
+                            <Label Style="{DynamicResource SearchLabelStyle}" Content="Sort by: "></Label>
+                            <ComboBox x:Name="SortCombo_1" Style="{DynamicResource SearchComboStyle}" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:SortBy}}}" SelectedIndex="0" SelectionChanged="SearchParameter_Changed"/>
+                            <Label Style="{DynamicResource SearchLabelStyle}" Content="Search: "></Label>
+                            <TextBox x:Name="SearchBox_1" Style="{DynamicResource SearchBarStyle}" TextChanged="SearchParameter_Changed"></TextBox>
+                        </StackPanel>
+                        <StackPanel x:Name="Onhold_Panel">
+                            <!--Insert records here with code-->
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem x:Name="StatusTab_2" Header="Backlog" Selector.Selected="TabItem_Selected" Style="{DynamicResource TabItemStyle}">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Style="{DynamicResource SearchPanelStyle}">
+                            <Label Style="{DynamicResource SearchLabelStyle}" Content="Sort by: "></Label>
+                            <ComboBox x:Name="SortCombo_2" Style="{DynamicResource SearchComboStyle}" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:SortBy}}}" SelectedIndex="0" SelectionChanged="SearchParameter_Changed"/>
+                            <Label Style="{DynamicResource SearchLabelStyle}" Content="Search: "></Label>
+                            <TextBox x:Name="SearchBox_2" Style="{DynamicResource SearchBarStyle}" TextChanged="SearchParameter_Changed"></TextBox>
+                        </StackPanel>
+                        <StackPanel x:Name="Backlog_Panel">
+                            <!--Insert records here with code-->
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem x:Name="StatusTab_3" Header="Completed" Selector.Selected="TabItem_Selected" Style="{DynamicResource TabItemStyle}">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Style="{DynamicResource SearchPanelStyle}">
+                            <Label Style="{DynamicResource SearchLabelStyle}" Content="Sort by: "></Label>
+                            <ComboBox x:Name="SortCombo_3" Style="{DynamicResource SearchComboStyle}" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:SortBy}}}" SelectedIndex="0" SelectionChanged="SearchParameter_Changed"/>
+                            <Label Style="{DynamicResource SearchLabelStyle}" Content="Search: "></Label>
+                            <TextBox x:Name="SearchBox_3" Style="{DynamicResource SearchBarStyle}" TextChanged="SearchParameter_Changed"></TextBox>
+                        </StackPanel>
+                        <StackPanel x:Name="Completed_Panel">
+                            <!--Insert records here with code-->
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem x:Name="StatusTab_4" Header="Dropped" Selector.Selected="TabItem_Selected"  Style="{DynamicResource TabItemStyle}">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Style="{DynamicResource SearchPanelStyle}">
+                            <Label Style="{DynamicResource SearchLabelStyle}" Content="Sort by: "></Label>
+                            <ComboBox x:Name="SortCombo_4" Style="{DynamicResource SearchComboStyle}" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:SortBy}}}" SelectedIndex="0" SelectionChanged="SearchParameter_Changed"/>
+                            <Label Style="{DynamicResource SearchLabelStyle}" Content="Search: "></Label>
+                            <TextBox x:Name="SearchBox_4" Style="{DynamicResource SearchBarStyle}" TextChanged="SearchParameter_Changed"></TextBox>
+                        </StackPanel>
+                        <StackPanel x:Name="Dropped_Panel">
+                            <!--Insert records here with code-->
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+        <Button Grid.Column="1" Grid.Row="3" Content="Add" Click="AddButton_Click" Style="{DynamicResource ButtonStyle}"></Button>
+        <StackPanel Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Center">
+            <Label VerticalAlignment="Center" Grid.ColumnSpan="3" Content="Items per page: "  Style="{DynamicResource SearchLabelStyle}"></Label>
+            <ComboBox x:Name="ItemAmountCombo" Width="45" Height="26" VerticalAlignment="Center" SelectedIndex="1" Style="{DynamicResource SearchComboStyle}" SelectionChanged="ItemAmountCombo_SelectionChanged">
+                <ComboBoxItem Content="10"></ComboBoxItem>
+                <ComboBoxItem Content="20"></ComboBoxItem>
+                <ComboBoxItem Content="30"></ComboBoxItem>
+                <ComboBoxItem Content="50"></ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel x:Name="PagePanel" Grid.Column="5" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <!--Insert page buttons here with code-->
+        </StackPanel>
+    </Grid>
+</Window>
