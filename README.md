@@ -3,8 +3,8 @@
 #### Anyone is welcome to use this application however they wish
 
 This applications makes use of SQLite to save the title, genre, subgenres, total chapters/pages, read chapters/pages, an image and a rating of books/comics or other content. <br />
-The application only requires internet for adding images from URLs, everything else is fully usable offline.
-This project was created in Visual studio 2022 community edition.
+The application only requires internet for adding images from URLs, everything else is fully usable offline. <br />
+This project was created in Visual studio 2022 community edition. <br />
 
 ![](screenshot.png)
 
