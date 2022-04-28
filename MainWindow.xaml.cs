@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -195,16 +196,22 @@ namespace ReadingCompanion
             Image image = new Image();
             try
             {
-                if (item.ImageURL == "" || item.ImageURL == null)
-                    image.Source = new BitmapImage(new Uri("pack://application:,,,/Images/NoImage.png"));
-                else
-                    image.Source = new BitmapImage(new Uri($"{item.ImageURL}"));
+                BitmapImage bitmap;
+                using (var stream = new MemoryStream(item.ImageData))
+                {
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.StreamSource = stream;
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+                }
+                image.Source = bitmap;
             }
-            catch (Exception ex)
+            catch
             {
                 image.Source = new BitmapImage(new Uri("pack://application:,,,/Images/NoImage.png"));
             }
-
             image.Height = 200;
             image.Width = 150;
             image.Margin = new Thickness(5, 0, 0, 0);

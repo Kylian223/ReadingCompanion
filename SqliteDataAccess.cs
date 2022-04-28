@@ -26,7 +26,7 @@ namespace ReadingCompanion
                                                     SubGenre2 TEXT,
                                                     SubGenre3 TEXT,
                                                     Status INTEGER NOT NULL DEFAULT 0,
-                                                    ImageURL TEXT,
+                                                    ImageData BLOB,
                                                     PRIMARY KEY(Id AUTOINCREMENT)
                                                     );");
             }
@@ -77,7 +77,7 @@ namespace ReadingCompanion
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute($"update Item set Title=@Title, ReadProgress=@ReadProgress, ReadTotal=@ReadTotal, Rating=@Rating, Genre=@Genre, SubGenre1=@SubGenre1, SubGenre2=@SubGenre2, SubGenre3=@SubGenre3, Status=@Status, ImageURL=@ImageURL where Id=@Id", item);
+                cnn.Execute($"update Item set Title=@Title, ReadProgress=@ReadProgress, ReadTotal=@ReadTotal, Rating=@Rating, Genre=@Genre, SubGenre1=@SubGenre1, SubGenre2=@SubGenre2, SubGenre3=@SubGenre3, Status=@Status, ImageData=@ImageData where Id=@Id", item);
             }
         }
 
@@ -119,7 +119,7 @@ namespace ReadingCompanion
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("insert into Item (Title, ReadProgress, ReadTotal, Rating, Genre, SubGenre1, SubGenre2, SubGenre3, Status, ImageURL) values (@Title, @ReadProgress, @ReadTotal, @Rating, @Genre, @SubGenre1, @SubGenre2, @SubGenre3, @Status, @ImageURL)", item);
+                cnn.Execute("insert into Item (Title, ReadProgress, ReadTotal, Rating, Genre, SubGenre1, SubGenre2, SubGenre3, Status, ImageData) values (@Title, @ReadProgress, @ReadTotal, @Rating, @Genre, @SubGenre1, @SubGenre2, @SubGenre3, @Status, @ImageData)", item);
             }
         }
         #endregion

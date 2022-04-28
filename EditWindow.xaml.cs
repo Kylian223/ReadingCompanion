@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,6 +20,7 @@ namespace ReadingCompanion
     {
         MainWindow parent;
         int id;
+        private byte[] imageData;
 
         public EditWindow(MainWindow mw, ItemModel item)
         {
@@ -33,8 +35,26 @@ namespace ReadingCompanion
             this.ReadProgressBox.Value = (decimal)item.ReadProgress; 
             this.ReadTotalBox.Value = (decimal)item.ReadTotal; 
             this.RatingBox.Value = (decimal)item.Rating;
-            this.StatusBox.SelectedIndex = (int)item.Status; 
-            this.ImageURLBox.Text = item.ImageURL;
+            this.StatusBox.SelectedIndex = (int)item.Status;
+            this.imageData = item.ImageData;
+            try
+            {
+                BitmapImage bitmap;
+                using (var stream = new MemoryStream(this.imageData))
+                {
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.StreamSource = stream;
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+                }
+                this.PreviewImage.Source = bitmap;
+            }
+            catch
+            {
+                this.PreviewImage.Source = new BitmapImage(new Uri("pack://application:,,,/Images/NoImage.png"));
+            }
         }
 
         private async void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -49,12 +69,40 @@ namespace ReadingCompanion
             newitem.SubGenre2 = Subgenre2Box.Text;
             newitem.SubGenre3 = Subgenre3Box.Text;
             newitem.Status = (Status)StatusBox.SelectedIndex;
-            newitem.ImageURL = ImageURLBox.Text;
+            newitem.ImageData = this.imageData;
             newitem.Id = this.id;
 
             SqliteDataAccess.UpdateItem(newitem);
             parent.RefreshAsync(parent.Page);
             this.Close();
+        }
+
+        private void SelectImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            ImageSelectionWindow isw = new ImageSelectionWindow();
+            bool? ObtainedResult = isw.ShowDialog();
+            if (ObtainedResult == true)
+            {
+                try
+                {
+                    this.imageData = isw.ImageData;
+                    BitmapImage bitmap;
+                    using (var stream = new MemoryStream(this.imageData))
+                    {
+                        bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.StreamSource = stream;
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.EndInit();
+                        bitmap.Freeze();
+                    }
+                    this.PreviewImage.Source = bitmap;
+                }
+                catch
+                {
+                    this.PreviewImage.Source = new BitmapImage(new Uri("pack://application:,,,/Images/NoImage.png"));
+                }
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
